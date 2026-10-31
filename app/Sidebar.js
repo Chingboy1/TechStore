@@ -1,0 +1,84 @@
+"use client";
+import { useState } from "react";
+import Link from "next/link";
+import { useCart } from "./CartContext";
+import { Smartphone, Tablet, Laptop, Monitor, Cpu, Headphones, Mouse, Keyboard, Speaker, Glasses, LayoutGrid, Menu, X } from "lucide-react";
+
+const iconMap = {
+  "dien-thoai": Smartphone, "may-tinh-bang": Tablet, "laptop": Laptop, "pc-theo-nganh": Monitor,
+  "linh-kien-pc": Cpu, "tai-nghe": Headphones, "chuot": Mouse, "ban-phim": Keyboard, "loa": Speaker, "kinh-ai": Glasses,
+};
+
+export default function Sidebar({ categories }) {
+  const { isMenuOpen, setIsMenuOpen } = useCart();
+  const [isHovered, setIsHovered] = useState(false);
+  const isExpanded = isHovered || isMenuOpen;
+
+  return (
+    /* 
+      - Thay đổi: Thêm top-4, left-4, bottom-4 để nó lơ lửng (không dính sát mép)
+      - rounded-[2rem]: Bo góc cực tròn
+      - bg-white/70 backdrop-blur-xl: Hiệu ứng kính mờ
+      - Xóa border-r (viền phải) và thay bằng shadow mềm
+    */
+    <aside
+      onMouseEnter={() => setIsHovered(true)} 
+      onMouseLeave={() => setIsHovered(false)}
+      className={`fixed top-4 left-4 bottom-4 bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.3)] transition-all duration-300 ease-in-out z-[60] flex flex-col py-4 overflow-hidden ${isExpanded ? "w-[260px]" : "w-[70px]"}`}
+    >
+      <div className="flex items-center justify-between px-4 mb-6 h-10 flex-shrink-0">
+        {/* Nút Menu kiểu Apple: Hình tròn, màu xám nhạt, không có màu vàng chói */}
+        <div 
+          onClick={() => setIsMenuOpen(!isMenuOpen)} 
+          className="w-10 h-10 bg-gray-200/50 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-full flex items-center justify-center flex-shrink-0 cursor-pointer transition-colors"
+        >
+          <Menu size={20} className="text-gray-700 dark:text-gray-300" strokeWidth={2} />
+        </div>
+        
+        {/* Nút X đóng menu */}
+        {isMenuOpen && (
+          <button 
+            onClick={() => setIsMenuOpen(false)} 
+            className="w-8 h-8 flex items-center justify-center bg-gray-200/50 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-full text-gray-600 dark:text-gray-300 transition-colors"
+          >
+            <X size={16} />
+          </button>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-2 overflow-y-auto overflow-x-hidden no-scrollbar pb-10 px-2">
+        <Link 
+          href="/" 
+          onClick={() => setIsMenuOpen(false)} 
+          className="flex items-center px-2 py-3 hover:bg-black/5 dark:hover:bg-white/10 rounded-2xl transition-all group"
+        >
+          <div className="w-10 flex justify-center flex-shrink-0 text-gray-600 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors">
+            <LayoutGrid size={22} strokeWidth={1.5} />
+          </div>
+          <span className={`ml-2 font-semibold text-gray-800 dark:text-gray-200 whitespace-nowrap transition-opacity duration-300 ${isExpanded ? "opacity-100" : "opacity-0"}`}>
+            Tất cả sản phẩm
+          </span>
+        </Link>
+
+        {categories.map((cat) => {
+          const IconComponent = iconMap[cat.slug] || LayoutGrid;
+          return (
+            <Link 
+              key={cat.slug} 
+              href={`/products?category=${cat.slug}`} 
+              onClick={() => setIsMenuOpen(false)} 
+              className="flex items-center px-2 py-3 hover:bg-black/5 dark:hover:bg-white/10 rounded-2xl transition-all group"
+            >
+              <div className="w-10 flex justify-center flex-shrink-0 text-gray-500 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors">
+                <IconComponent size={22} strokeWidth={1.5} />
+              </div>
+              <span className={`ml-2 font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap transition-opacity duration-300 ${isExpanded ? "opacity-100" : "opacity-0"}`}>
+                {cat.name}
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+    </aside>
+  );
+}
