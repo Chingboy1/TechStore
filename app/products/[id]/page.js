@@ -1,25 +1,22 @@
 import { notFound } from "next/navigation";
-import { getProduct, formatPrice } from "@/lib/products";
+import { getProduct, getProducts, formatPrice } from "@/lib/products"; // Thêm getProducts
 import Link from "next/link";
 import AddToCart from "../../AddToCart";
 import ProductImage from "../../ProductImage";
-import FadeIn from "../../FadeIn"; // Import FadeIn
-import { CheckCircle2, XCircle } from "lucide-react";
-export async function generateMetadata({ params }) {
-  const { id } = await params;
-  const p = await getProduct(id);
-  if (!p) return { title: "Sản phẩm không tồn tại" };
-  return {
-    title: `${p.name} - TechStore`,
-    description: p.description,
-  };
-}
+import FadeIn from "../../FadeIn";
+import { CheckCircle2, XCircle, ChevronRight } from "lucide-react"; // Thêm ChevronRight
 
 export default async function ProductPage({ params }) {
   const { id } = await params;
   const p = await getProduct(id);
   
   if (!p) notFound();
+
+  // LẤY SẢN PHẨM LIÊN QUAN
+  const allProducts = await getProducts();
+  const relatedProducts = allProducts
+    .filter((item) => item.category === p.category && item.id !== p.id) // Cùng danh mục và khác ID hiện tại
+    .slice(0, 4); // Chỉ lấy tối đa 4 sản phẩm
 
   return (
     <main className="max-w-6xl mx-auto px-4 md:px-8 py-10 min-h-screen bg-white dark:bg-[#0a0a0a] transition-colors duration-300">
@@ -38,7 +35,7 @@ export default async function ProductPage({ params }) {
       {/* KHỐI TRÊN: ẢNH & THÔNG TIN */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start mb-20">
         
-        {/* Cột trái: Ảnh (Hiệu ứng trượt sang trái) */}
+        {/* Cột trái: Ảnh */}
         <FadeIn delay={0.1}>
           <div className="sticky top-24 bg-gray-50 dark:bg-[#1c1c1e] rounded-[2rem] p-8 flex items-center justify-center min-h-[400px] md:min-h-[500px] transition-colors duration-300">
             <ProductImage 
@@ -51,7 +48,7 @@ export default async function ProductPage({ params }) {
           </div>
         </FadeIn>
 
-        {/* Cột phải: Thông tin (Hiệu ứng trượt lên) */}
+        {/* Cột phải: Thông tin */}
         <FadeIn delay={0.2}>
           <div className="flex flex-col pt-4">
             {p.brand && <p className="text-sm font-semibold text-[#ff3b30] uppercase tracking-widest mb-2">Mới</p>}
@@ -80,7 +77,7 @@ export default async function ProductPage({ params }) {
       </div>
 
       {/* KHỐI DƯỚI: THÔNG TIN CHI TIẾT */}
-      <div className="border-t border-gray-200 dark:border-gray-800 pt-16 space-y-16">
+      <div className="border-t border-gray-200 dark:border-gray-800 pt-16 space-y-16 mb-24">
         
         {/* Mô tả */}
         {p.description && (
@@ -134,8 +131,51 @@ export default async function ProductPage({ params }) {
             </section>
           </FadeIn>
         )}
-
       </div>
+
+      {/* ================= KHỐI SẢN PHẨM LIÊN QUAN ================= */}
+      {relatedProducts.length > 0 && (
+        <div className="border-t border-gray-200 dark:border-gray-800 pt-16">
+          <FadeIn>
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-3xl font-semibold text-gray-900 dark:text-white tracking-tight">
+                Có thể bạn cũng thích
+              </h2>
+              <Link 
+                href={`/products?category=${p.category}`}
+                className="text-[#0071e3] dark:text-blue-400 font-medium hover:underline flex items-center gap-1 group text-sm"
+              >
+                Xem tất cả
+                <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </FadeIn>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {relatedProducts.map((rp, index) => (
+              <FadeIn key={rp.id} delay={index * 0.1}>
+                <Link 
+                  href={`/products/${rp.id}`}
+                  className="bg-[#f5f5f7] dark:bg-[#1c1c1e] rounded-3xl p-4 flex flex-col items-center text-center group transition-all duration-300 hover:shadow-lg hover:-translate-y-1 h-full border border-transparent dark:border-gray-800"
+                >
+                  <div className="w-full h-40 mb-4 relative">
+                    <ProductImage 
+                      id={rp.id} 
+                      category={rp.category} 
+                      name={rp.name} 
+                      imageSrc={rp.image} 
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" 
+                    />
+                  </div>
+                  <h3 className="font-semibold text-gray-900 dark:text-white text-sm line-clamp-1 mb-1">{rp.name}</h3>
+                  <p className="text-[#0071e3] dark:text-blue-400 font-bold text-sm mt-auto">{formatPrice(rp.price)}</p>
+                </Link>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      )}
+
     </main>
   );
 }

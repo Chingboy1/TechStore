@@ -3,9 +3,9 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer"; 
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import { Toaster } from 'react-hot-toast';
 import { getProducts, getCategories } from "@/lib/products";
+import "./globals.css"; // Phải có dòng này ở đầu file
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });

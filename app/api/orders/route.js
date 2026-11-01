@@ -53,7 +53,22 @@ export async function POST(request) {
   const total = lines.reduce((s, l) => s + l.price * l.qty, 0);
   const code = "DH" + Date.now().toString().slice(-7);
 
-  const { data: order, error: e1 } = await supabaseAdmin.from("orders").insert({ code, customer_name: name, phone, address, total }).select("id, code").single();
+    // Thêm user_id từ body gửi lên
+  const userId = body.user_id || null; 
+
+  const { data: order, error: e1 } = await supabaseAdmin
+    .from("orders")
+    .insert({ 
+      code, 
+      customer_name: name, 
+      phone, 
+      address, 
+      total, 
+      status: 'pending',
+      user_id: userId // Lưu user_id vào database
+    })
+    .select("id, code")
+    .single();
   if (e1) {
     console.error("Lỗi lưu bảng orders:", e1);
     return NextResponse.json({ error: "Không lưu được đơn hàng" }, { status: 500 });

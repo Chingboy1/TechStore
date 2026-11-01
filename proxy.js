@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export function middleware(request) {
+export function proxy(request) {
   const password = process.env.ADMIN_PASSWORD;
   const header = request.headers.get("authorization") ?? "";
   const [scheme, encoded] = header.split(" ");
@@ -17,5 +17,6 @@ export function middleware(request) {
   });
 }
 
-// Chỉ áp dụng cho các đường dẫn bắt đầu bằng /admin
-export const config = { matcher: ["/admin/:path*"] };
+export const config = {
+  matcher: ["/admin/:path*"], // Chỉ áp dụng cho /admin
+};
