@@ -24,3 +24,19 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+/* Hiệu ứng chuyển trang mượt mà giống Apple */
+@keyframes appleFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(15px) scale(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-apple-transition {
+  /* 0.6s là thời gian chuyển động, cubic-bezier giúp tốc độ mượt mà (nhanh lúc đầu, chậm lúc sau) */
+  animation: appleFadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
