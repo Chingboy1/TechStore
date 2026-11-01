@@ -5,6 +5,15 @@ import AddToCart from "../../AddToCart";
 import ProductImage from "../../ProductImage";
 import FadeIn from "../../FadeIn"; // Import FadeIn
 import { CheckCircle2, XCircle } from "lucide-react";
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const p = await getProduct(id);
+  if (!p) return { title: "Sản phẩm không tồn tại" };
+  return {
+    title: `${p.name} - TechStore`,
+    description: p.description,
+  };
+}
 
 export default async function ProductPage({ params }) {
   const { id } = await params;
