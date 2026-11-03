@@ -5,13 +5,12 @@ const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
   const [items, setItems] = useState([]);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // KHÔNG ĐƯỢC THIẾU DÒNG NÀY
+  const [isMenuOpen, setIsMenuOpen] = useState(false); 
 
-  // Thêm tham số color vào hàm addItem
   const addItem = (product, variant, color) => {
     const key = `${product.id}|${variant?.label || 'default'}|${color || 'default'}`;
     const price = variant ? variant.price : product.price;
-    
     setItems((prev) => {
       const found = prev.find((i) => i.key === key);
       if (found) {
@@ -36,10 +35,18 @@ export function CartProvider({ children }) {
   const total = items.reduce((s, i) => s + i.price * i.qty, 0);
 
   return (
-    <CartContext.Provider value={{ items, addItem, changeQty, removeItem, clear, count, total, isMenuOpen, setIsMenuOpen }}>
+    <CartContext.Provider 
+      value={{ 
+        items, addItem, changeQty, removeItem, clear, count, total, 
+        isMenuOpen, setIsMenuOpen // PHẢI TRUYỀN 2 BIẾN NÀY RA NGOÀI
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
 }
-
-export const useCart = () => useContext(CartContext);
+export const useCart = () => {
+  const ctx = useContext(CartContext);
+  if (!ctx) throw new Error("useCart phải được dùng bên trong <CartProvider>");
+  return ctx;
+};
