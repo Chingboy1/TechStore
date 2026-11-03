@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 mt-auto pt-10 pb-6 text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
         <div>
-          <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-4">TechStore.</h3>
+          <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-4">Doom</h3>
           <p>Hệ thống bán lẻ thiết bị công nghệ chính hãng. Trải nghiệm mua sắm tuyệt vời, bảo hành uy tín.</p>
         </div>
         <div>

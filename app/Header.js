@@ -11,7 +11,7 @@ const removeAccents = (str) => {
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D");
 };
 
-// Dữ liệu cho Mega Menu
+// Cập nhật MENU_DATA với subItems cho cả 3 danh mục
 const MENU_DATA = {
   "Laptop": {
     categories: [
@@ -27,8 +27,22 @@ const MENU_DATA = {
       {
         title: "Mua sắm theo Hãng",
         links: [
-          { name: "Apple", href: "/products?category=laptop&brand=Apple" },
-          { name: "ASUS", href: "/products?category=laptop&brand=ASUS" },
+          { 
+            name: "Apple", 
+            href: "/products?category=laptop&brand=Apple",
+            subItems: [
+              { name: "MacBook Air", href: "/products?q=MacBook Air" },
+              { name: "MacBook Pro", href: "/products?q=MacBook Pro" }
+            ]
+          },
+          { 
+            name: "ASUS", 
+            href: "/products?category=laptop&brand=ASUS",
+            subItems: [
+              { name: "TUF", href: "/products?q=TUF" },
+              { name: "Vivobook", href: "/products?q=Vivobook" }
+            ]
+          },
           { name: "Dell", href: "/products?category=laptop&brand=Dell" },
           { name: "Lenovo", href: "/products?category=laptop&brand=Lenovo" },
         ],
@@ -40,9 +54,15 @@ const MENU_DATA = {
       {
         title: "Khám phá Điện thoại",
         links: [
-          { name: "iPhone", href: "/products?q=iPhone" },
-          { name: "Samsung", href: "/products?q=Samsung" },
-          { name: "Điện thoại phổ thông", href: "/products?category=dien-thoai" },
+          { 
+            name: "iPhone", 
+            href: "/products?q=iPhone",
+            subItems: [
+              { name: "iPhone 15", href: "/products?q=iPhone 15" },
+              { name: "iPhone 16", href: "/products?q=iPhone 16" },
+              { name: "iPhone 17", href: "/products?q=iPhone 17" },
+            ]
+          },
         ],
       },
       {
@@ -60,8 +80,22 @@ const MENU_DATA = {
       {
         title: "Linh kiện máy tính",
         links: [
-          { name: "Card màn hình (VGA)", href: "/products?q=VGA" },
-          { name: "RAM máy tính", href: "/products?q=RAM" },
+          { 
+            name: "Card màn hình (VGA)", 
+            href: "/products?q=VGA",
+            subItems: [
+              { name: "RTX 40 Series", href: "/products?q=RTX 40" },
+              { name: "RTX 30 Series", href: "/products?q=RTX 30" }
+            ]
+          },
+          { 
+            name: "RAM máy tính", 
+            href: "/products?q=RAM",
+            subItems: [
+              { name: "RAM DDR4", href: "/products?q=DDR4" },
+              { name: "RAM DDR5", href: "/products?q=DDR5" }
+            ]
+          },
           { name: "Bo mạch chủ (Mainboard)", href: "/products?q=Mainboard" },
         ],
       },
@@ -84,22 +118,17 @@ export default function Header({ products }) {
   const [isFocused, setIsFocused] = useState(false);
   const searchRef = useRef(null);
 
-  // State quản lý Mega Menu
   const [activeMenu, setActiveMenu] = useState(null);
   const menuTimeout = useRef(null);
-
-  // State quản lý Đăng nhập
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Lấy thông tin user ban đầu
     const getUser = async () => {
       const { data } = await supabase.auth.getUser();
       setUser(data.user);
     };
     getUser();
 
-    // Lắng nghe sự thay đổi trạng thái đăng nhập
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user || null);
     });
@@ -109,7 +138,6 @@ export default function Header({ products }) {
     };
   }, []);
 
-  // Xử lý Mega Menu
   const handleMouseEnter = (menuName) => {
     if (menuTimeout.current) clearTimeout(menuTimeout.current);
     setActiveMenu(menuName);
@@ -121,7 +149,6 @@ export default function Header({ products }) {
     }, 150); 
   };
 
-  // Xử lý Tìm kiếm
   const handleSearch = (e) => {
     const value = e.target.value;
     setQuery(value);
@@ -146,7 +173,6 @@ export default function Header({ products }) {
     }
   };
 
-  // Đóng gợi ý tìm kiếm khi click ra ngoài
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -159,12 +185,11 @@ export default function Header({ products }) {
 
   return (
     <header 
-      className="sticky top-0 z-50 bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-800/50 transition-colors duration-300"
+      className="sticky top-0 z-50 bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50 transition-colors duration-300"
       onMouseLeave={handleMouseLeave}
     >
       <div className="max-w-7xl mx-auto px-4 h-[60px] flex items-center justify-between gap-8 relative z-50">
         
-        {/* BÊN TRÁI: LOGO & MENU MOBILE */}
         <div className="flex items-center gap-4">
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)} 
@@ -172,17 +197,13 @@ export default function Header({ products }) {
           >
             <Menu size={24} />
           </button>
-          <Link href="/" className="text-2xl font-bold tracking-tighter text-gray-900 dark:text-white hover:opacity-80 transition-opacity">
-            TechStore.
+          <Link href="/" className="text-2xl font-extrabold tracking-tighter text-gray-900 dark:text-white hover:opacity-80 transition-opacity">
+            DOOM.
           </Link>
         </div>
 
-        {/* Ở GIỮA: MENU ĐIỀU HƯỚNG */}
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600 dark:text-gray-400 h-full">
-          <button 
-            onClick={() => setIsMenuOpen(true)} 
-            className="hover:text-black dark:hover:text-white transition-colors py-5"
-          >
+          <button onClick={() => setIsMenuOpen(true)} className="hover:text-black dark:hover:text-white transition-colors py-5">
             Danh mục
           </button>
           
@@ -203,10 +224,7 @@ export default function Header({ products }) {
           ))}
         </nav>
 
-        {/* BÊN PHẢI: TÌM KIẾM, TÀI KHOẢN, GIỎ HÀNG */}
         <div className="flex items-center gap-5 relative z-50">
-          
-          {/* Thanh Tìm Kiếm */}
           <div className="hidden lg:block relative" ref={searchRef}>
             <form action="/products" method="GET">
               <input
@@ -222,7 +240,6 @@ export default function Header({ products }) {
               <Search size={16} className="absolute left-3.5 top-2.5 text-gray-400 dark:text-gray-500" />
             </form>
 
-            {/* Khung gợi ý */}
             {isFocused && query.trim().length > 0 && (
               <div className="absolute top-full right-0 mt-3 w-80 bg-white dark:bg-[#1c1c1e] rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-800 z-50 transition-colors">
                 {suggestions.length > 0 ? (
@@ -258,18 +275,15 @@ export default function Header({ products }) {
             )}
           </div>
 
-          {/* Icon Tài Khoản / Đăng nhập */}
           <Link 
             href={user ? "/profile" : "/login"} 
             className="relative text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors" 
             title={user ? "Tài khoản của tôi" : "Đăng nhập"}
           >
             <User size={22} strokeWidth={1.5} />
-            {/* Chấm xanh báo hiệu đã đăng nhập */}
             {user && <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-500 border-2 border-white dark:border-[#0a0a0a] rounded-full"></span>}
           </Link>
 
-          {/* Icon Giỏ Hàng */}
           <Link href="/cart" className="relative text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">
             <ShoppingBag size={22} strokeWidth={1.5} />
             {count > 0 && (
@@ -281,7 +295,7 @@ export default function Header({ products }) {
         </div>
       </div>
 
-      {/* ================= LỚP PHỦ MỜ (BACKDROP) ================= */}
+      {/* Lớp phủ mờ */}
       <div 
         className={`fixed inset-0 top-[61px] bg-white/60 dark:bg-black/60 backdrop-blur-md z-40 transition-opacity duration-300 ${
           activeMenu ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
@@ -289,7 +303,7 @@ export default function Header({ products }) {
         onClick={() => setActiveMenu(null)}
       ></div>
 
-      {/* ================= MEGA MENU XỔ XUỐNG ================= */}
+      {/* Mega Menu */}
       <div 
         className={`absolute top-[61px] left-0 w-full bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur-2xl border-b border-gray-200/50 dark:border-gray-800/50 shadow-2xl overflow-hidden z-50 transition-all duration-300 ease-in-out grid ${
           activeMenu ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 pointer-events-none"
@@ -299,18 +313,37 @@ export default function Header({ products }) {
           <div className="max-w-7xl mx-auto px-4 py-10 flex gap-16">
             {activeMenu && MENU_DATA[activeMenu].categories.map((col, index) => (
               <div key={index} className="flex flex-col gap-3 min-w-[200px]">
-                <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-2">
+                <h3 className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2">
                   {col.title}
                 </h3>
+                
                 {col.links.map((link, i) => (
-                  <Link 
-                    key={i} 
-                    href={link.href}
-                    onClick={() => setActiveMenu(null)}
-                    className="text-xl font-medium text-gray-900 dark:text-gray-100 hover:text-[#0071e3] dark:hover:text-blue-400 transition-colors"
-                  >
-                    {link.name}
-                  </Link>
+                  // Sử dụng class group/sub để hiển thị subItems
+                  <div key={i} className="group/sub flex flex-col">
+                    <Link 
+                      href={link.href}
+                      onClick={() => setActiveMenu(null)}
+                      className="text-xl font-medium text-gray-900 dark:text-gray-100 hover:text-[#0071e3] dark:hover:text-blue-400 transition-colors py-1 inline-block"
+                    >
+                      {link.name}
+                    </Link>
+                    
+                    {/* Danh sách con xổ xuống khi hover */}
+                    {link.subItems && (
+                      <div className="hidden group-hover/sub:flex flex-col mt-1 pl-3 border-l-2 border-gray-200 dark:border-gray-700 space-y-2">
+                        {link.subItems.map((sub, j) => (
+                          <Link
+                            key={j}
+                            href={sub.href}
+                            onClick={() => setActiveMenu(null)}
+                            className="text-base text-gray-600 dark:text-gray-400 hover:text-[#0071e3] dark:hover:text-blue-400 transition-colors"
+                          >
+                            {sub.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
             ))}

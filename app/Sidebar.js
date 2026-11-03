@@ -22,7 +22,7 @@ export default function Sidebar({ categories }) {
     <aside
       onMouseEnter={() => setIsHovered(true)} 
       onMouseLeave={() => setIsHovered(false)}
-      className={`fixed top-4 left-4 bottom-4 bg-white/70 dark:bg-[#1c1c1e]/80 backdrop-blur-xl rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)] border border-transparent dark:border-gray-800/50 transition-all duration-300 ease-in-out z-[60] flex flex-col py-4 overflow-hidden ${isExpanded ? "w-[260px]" : "w-[70px]"}`}
+      className={`fixed top-4 left-4 bottom-4 bg-white/70 dark:bg-[#0a0a0a]/80 backdrop-blur-xl rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)] border border-transparent dark:border-gray-800/30 transition-all duration-300 ease-in-out z-[60] flex flex-col py-4 overflow-hidden ${isExpanded ? "w-[260px]" : "w-[70px]"}`}
     >
       <div className="flex items-center justify-between px-4 mb-6 h-10 flex-shrink-0">
         {/* Nút Menu kiểu Apple: Hình tròn, màu xám đen (Dark) */}

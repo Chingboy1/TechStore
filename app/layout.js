@@ -11,14 +11,16 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata = {
-  title: "TechStore - Cửa hàng công nghệ",
+  title: "Doom - Cửa hàng công nghệ",
   description: "Website bán đồ công nghệ tích hợp chatbot",
 };
 
 export default async function RootLayout({ children }) {
   // Lấy dữ liệu từ Supabase để truyền cho Header (tìm kiếm) và Sidebar (danh mục)
   const allProducts = await getProducts();
-  const categories = await getCategories();
+    const allCategories = await getCategories();
+  // Lọc bỏ danh mục "PC theo ngành"
+  const categories = allCategories.filter((c) => c.slug !== "pc-theo-nganh");
   
   // Chỉ lấy các trường cần thiết cho thanh tìm kiếm để tối ưu hiệu năng
   const searchList = allProducts.map(({ id, name, price, category, brand }) => ({

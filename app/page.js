@@ -14,7 +14,7 @@ export default async function HomePage() {
       <section className="text-center pt-32 pb-24 px-4 max-w-4xl mx-auto">
         <FadeIn>
           <h1 className="text-6xl md:text-8xl font-semibold tracking-tighter mb-6 leading-none">
-            TechStore.
+            Doom   
           </h1>
         </FadeIn>
         <FadeIn delay={0.1}>
