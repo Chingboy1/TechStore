@@ -6,12 +6,10 @@ import { formatPrice } from "@/lib/format";
 import { supabase } from "@/lib/supabase";
 import { Search, ShoppingBag, Menu, User } from "lucide-react";
 
-// Hàm bỏ dấu tiếng Việt
 const removeAccents = (str) => {
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D");
 };
 
-// Cập nhật MENU_DATA với subItems cho cả 3 danh mục
 const MENU_DATA = {
   "Laptop": {
     categories: [
@@ -35,14 +33,7 @@ const MENU_DATA = {
               { name: "MacBook Pro", href: "/products?q=MacBook Pro" }
             ]
           },
-          { 
-            name: "ASUS", 
-            href: "/products?category=laptop&brand=ASUS",
-            subItems: [
-              { name: "TUF", href: "/products?q=TUF" },
-              { name: "Vivobook", href: "/products?q=Vivobook" }
-            ]
-          },
+          { name: "ASUS", href: "/products?category=laptop&brand=ASUS" },
           { name: "Dell", href: "/products?category=laptop&brand=Dell" },
           { name: "Lenovo", href: "/products?category=laptop&brand=Lenovo" },
         ],
@@ -188,16 +179,18 @@ export default function Header({ products }) {
       className="sticky top-0 z-50 bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50 transition-colors duration-300"
       onMouseLeave={handleMouseLeave}
     >
-      <div className="max-w-7xl mx-auto px-4 h-[60px] flex items-center justify-between gap-8 relative z-50">
+      {/* Đã sửa gap-8 thành gap-2 md:gap-8 để vừa mobile */}
+      <div className="max-w-7xl mx-auto px-4 h-[60px] flex items-center justify-between gap-2 md:gap-8 relative z-50">
         
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
+          {/* Nút Menu trên Mobile */}
           <button 
-            onClick={() => setIsMenuOpen(!isMenuOpen)} 
+            onClick={() => setIsMenuOpen(true)} 
             className="md:hidden text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
           >
             <Menu size={24} />
           </button>
-          <Link href="/" className="text-2xl font-extrabold tracking-tighter text-gray-900 dark:text-white hover:opacity-80 transition-opacity">
+          <Link href="/" className="text-xl md:text-2xl font-extrabold tracking-tighter text-gray-900 dark:text-white hover:opacity-80 transition-opacity">
             DOOM.
           </Link>
         </div>
@@ -224,7 +217,8 @@ export default function Header({ products }) {
           ))}
         </nav>
 
-        <div className="flex items-center gap-5 relative z-50">
+        <div className="flex items-center gap-3 md:gap-5 relative z-50">
+          {/* Thanh tìm kiếm (Tự động ẩn trên mobile) */}
           <div className="hidden lg:block relative" ref={searchRef}>
             <form action="/products" method="GET">
               <input
@@ -295,7 +289,7 @@ export default function Header({ products }) {
         </div>
       </div>
 
-      {/* Lớp phủ mờ */}
+      {/* Phần Mega Menu giữ nguyên (không đổi) */}
       <div 
         className={`fixed inset-0 top-[61px] bg-white/60 dark:bg-black/60 backdrop-blur-md z-40 transition-opacity duration-300 ${
           activeMenu ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
@@ -303,14 +297,13 @@ export default function Header({ products }) {
         onClick={() => setActiveMenu(null)}
       ></div>
 
-      {/* Mega Menu */}
       <div 
         className={`absolute top-[61px] left-0 w-full bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur-2xl border-b border-gray-200/50 dark:border-gray-800/50 shadow-2xl overflow-hidden z-50 transition-all duration-300 ease-in-out grid ${
           activeMenu ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 pointer-events-none"
         }`}
       >
         <div className="overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 py-10 flex gap-16">
+          <div className="max-w-7xl mx-auto px-4 py-10 flex flex-col md:flex-row gap-8 md:gap-16">
             {activeMenu && MENU_DATA[activeMenu].categories.map((col, index) => (
               <div key={index} className="flex flex-col gap-3 min-w-[200px]">
                 <h3 className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2">
@@ -318,7 +311,6 @@ export default function Header({ products }) {
                 </h3>
                 
                 {col.links.map((link, i) => (
-                  // Sử dụng class group/sub để hiển thị subItems
                   <div key={i} className="group/sub flex flex-col">
                     <Link 
                       href={link.href}
@@ -328,7 +320,6 @@ export default function Header({ products }) {
                       {link.name}
                     </Link>
                     
-                    {/* Danh sách con xổ xuống khi hover */}
                     {link.subItems && (
                       <div className="hidden group-hover/sub:flex flex-col mt-1 pl-3 border-l-2 border-gray-200 dark:border-gray-700 space-y-2">
                         {link.subItems.map((sub, j) => (

@@ -6,6 +6,12 @@ import ProductImage from "../../ProductImage";
 import FadeIn from "../../FadeIn";
 import { CheckCircle2, XCircle, ChevronRight } from "lucide-react"; // Thêm ChevronRight
 
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const p = await getProduct(id);
+  if (!p) return { title: "Không tìm thấy sản phẩm" };
+  return { title: p.name, description: p.description ?? `Mua ${p.name} chính hãng tại Doom` };
+}
 export default async function ProductPage({ params }) {
   const { id } = await params;
   const p = await getProduct(id);
