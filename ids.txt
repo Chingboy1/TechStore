@@ -1,0 +1,228 @@
+iphone-15  iPhone 15
+iphone-15-plus  iPhone 15 Plus
+iphone-15-pro  iPhone 15 Pro
+iphone-15-pro-max  iPhone 15 Pro Max
+iphone-16e  iPhone 16e
+iphone-16  iPhone 16
+iphone-16-plus  iPhone 16 Plus
+iphone-16-pro  iPhone 16 Pro
+iphone-16-pro-max  iPhone 16 Pro Max
+iphone-17e  iPhone 17e
+iphone-17  iPhone 17
+iphone-17-pro  iPhone 17 Pro
+iphone-17-pro-max  iPhone 17 Pro Max
+ipad-air-13-inch-m2  iPad Air 13 inch (M2)
+ipad-mini-a17-pro  iPad mini (A17 Pro)
+ipad-a16  iPad (A16)
+ipad-air-11-inch-m3  iPad Air 11 inch (M3)
+ipad-air-13-inch-m3  iPad Air 13 inch (M3)
+ipad-pro-11-inch-m5  iPad Pro 11 inch (M5)
+ipad-pro-13-inch-m5  iPad Pro 13 inch (M5)
+ipad-air-11-inch-m4  iPad Air 11 inch (M4)
+ipad-air-13-inch-m4  iPad Air 13 inch (M4)
+ipad-mini-a20-pro  iPad mini (A20 Pro)
+macbook-air-13-inch-m2  MacBook Air 13 inch (M2)
+macbook-air-15-inch-m2  MacBook Air 15 inch (M2)
+macbook-pro-13-inch-m2  MacBook Pro 13 inch (M2)
+macbook-pro-14-inch-m2-pro-m2-max  MacBook Pro 14 inch (M2 Pro / M2 Max)
+macbook-pro-16-inch-m2-pro-m2-max  MacBook Pro 16 inch (M2 Pro / M2 Max)
+macbook-air-13-inch-m3  MacBook Air 13 inch (M3)
+macbook-air-15-inch-m3  MacBook Air 15 inch (M3)
+macbook-pro-14-inch-m3  MacBook Pro 14 inch (M3)
+macbook-pro-14-inch-m3-pro-m3-max  MacBook Pro 14 inch (M3 Pro / M3 Max)
+macbook-pro-16-inch-m3-pro-m3-max  MacBook Pro 16 inch (M3 Pro / M3 Max)
+macbook-air-13-inch-m4  MacBook Air 13 inch (M4)
+macbook-air-15-inch-m4  MacBook Air 15 inch (M4)
+macbook-pro-14-inch-m4  MacBook Pro 14 inch (M4)
+macbook-pro-14-inch-m4-pro-m4-max  MacBook Pro 14 inch (M4 Pro / M4 Max)
+macbook-pro-16-inch-m4-pro-m4-max  MacBook Pro 16 inch (M4 Pro / M4 Max)
+macbook-pro-14-inch-m5  MacBook Pro 14 inch (M5)
+macbook-air-13-inch-m5  MacBook Air 13 inch (M5)
+macbook-air-15-inch-m5  MacBook Air 15 inch (M5)
+macbook-pro-14-inch-m5-pro-m5-max  MacBook Pro 14 inch (M5 Pro / M5 Max)
+macbook-pro-16-inch-m5-pro-m5-max  MacBook Pro 16 inch (M5 Pro / M5 Max)
+airpods-the-he-2  AirPods (thế hệ 2)
+airpods-the-he-3-hop-sac-magsafe  AirPods (thế hệ 3, hộp sạc MagSafe)
+airpods-4  AirPods 4
+airpods-4-voi-chu-dong-khu-tieng-on  AirPods 4 với Chủ Động Khử Tiếng Ồn
+airpods-pro-the-he-2-hop-sac-usbc  AirPods Pro (thế hệ 2, hộp sạc USBC)
+airpods-pro-3  AirPods Pro 3
+airpods-max-usbc  AirPods Max (USBC)
+airpods-max-2  AirPods Max 2
+airpods-5  AirPods 5
+airpods-5-voi-hop-sac-khong-day  AirPods 5 với Hộp Sạc Không Dây
+hyperx-cloud-stinger-2-core  HyperX Cloud Stinger 2 Core
+razer-blackshark-v2-x  Razer BlackShark V2 X
+logitech-g335  Logitech G335
+logitech-g432  Logitech G432
+dareu-eh416  Dareu EH416
+havit-h2002d  Havit H2002D
+logitech-g-pro-x  Logitech G Pro X
+asus-tuf-gaming-h3  ASUS TUF Gaming H3
+dareu-eh469  Dareu EH469
+razer-kraken-x-lite  Razer Kraken X Lite
+sony-wh-ch520  Sony WH-CH520
+logitech-g435-lightspeed  Logitech G435 LIGHTSPEED
+jbl-tune-720bt  JBL Tune 720BT
+soundcore-q20i  Soundcore Q20i
+logitech-g535-lightspeed  Logitech G535 LIGHTSPEED
+edifier-w820nb  Edifier W820NB
+edifier-w820nb-plus  Edifier W820NB Plus
+jbl-tune-770nc  JBL Tune 770NC
+soundcore-life-q30  Soundcore Life Q30
+sony-wh-ch720n  Sony WH-CH720N
+logitech-b100  Logitech B100
+logitech-m185  Logitech M185
+rapoo-m100-silent  Rapoo M100 Silent
+logitech-g102-lightsync  Logitech G102 LIGHTSYNC
+logitech-g304-lightspeed  Logitech G304 LIGHTSPEED
+logitech-m331-silent  Logitech M331 Silent
+rapoo-m650-silent  Rapoo M650 Silent
+dareu-lm115g  Dareu LM115G
+logitech-signature-m650  Logitech Signature M650
+asus-tuf-gaming-m3-gen-ii  ASUS TUF Gaming M3 Gen II
+logitech-k120  Logitech K120
+dareu-lk135  Dareu LK135
+logitech-pebble-keys-2-k380s  Logitech Pebble Keys 2 K380s
+redragon-fizz-k617  Redragon Fizz K617
+aula-f75  AULA F75
+dareu-ek87  Dareu EK87
+rapoo-v500-pro-87  Rapoo V500 Pro 87
+e-dra-ek398-alpha  E-DRA EK398 Alpha
+aula-f99  AULA F99
+logitech-k270  Logitech K270
+logitech-z120  Logitech Z120
+edifier-r19u  Edifier R19U
+creative-pebble-2-0  Creative Pebble 2.0
+creative-pebble-v2  Creative Pebble V2
+creative-pebble-plus-2-1  Creative Pebble Plus 2.1
+logitech-z213  Logitech Z213
+creative-pebble-pro  Creative Pebble Pro
+edifier-r1280t  Edifier R1280T
+microlab-b16  Microlab B16
+logitech-z407  Logitech Z407
+rokid-ai-glasses-style  Rokid AI Glasses Style
+rokid-max-2  Rokid Max 2
+rokid-ar-spatial  Rokid AR Spatial
+rokid-glasses  Rokid Glasses
+rokid-max  Rokid Max
+ray-ban-meta-wayfarer-gen-1  Ray-Ban Meta Wayfarer Gen 1
+ray-ban-meta-skyler-gen-1  Ray-Ban Meta Skyler Gen 1
+ray-ban-meta-wayfarer-gen-2  Ray-Ban Meta Wayfarer Gen 2
+ray-ban-meta-skyler-gen-2  Ray-Ban Meta Skyler Gen 2
+ray-ban-meta-headliner-gen-2  Ray-Ban Meta Headliner Gen 2
+gigabyte-geforce-rtx-4060-windforce-oc-8g  Gigabyte GeForce RTX 4060 WINDFORCE OC 8G
+msi-geforce-rtx-4060  MSI GeForce RTX 4060
+colorful-igame-geforce-rtx-4060-ultra-w-oc  Colorful iGame GeForce RTX 4060 Ultra W OC
+gigabyte-aorus-geforce-rtx-5060-elite-8g  Gigabyte AORUS GeForce RTX 5060 ELITE 8G
+asus-dual-geforce-rtx-5060-ti-oc-16gb  ASUS Dual GeForce RTX 5060 Ti OC 16GB
+corsair-vengeance-lpx-ddr4  Corsair Vengeance LPX DDR4
+kingston-16gb-ddr5-4800mhz  Kingston 16GB DDR5 4800MHz
+kingston-fury-beast-ddr4  Kingston Fury Beast DDR4
+teamgroup-elite-ddr4-3200  TeamGroup Elite DDR4-3200
+adata-xpg-spectrix-d35g-ddr4-3200  ADATA XPG Spectrix D35G DDR4-3200
+msi-b760-gaming-plus-wifi-ddr5  MSI B760 Gaming Plus WiFi DDR5
+gigabyte-b760m-gaming-wifi-plus  Gigabyte B760M Gaming WiFi Plus
+asus-prime-a520m-k  ASUS Prime A520M-K
+asus-rog-strix-b550-f-gaming-wifi-ii  ASUS ROG Strix B550-F Gaming WiFi II
+asus-b650m-ayw-wifi  ASUS B650M-AYW WiFi
+kenoo-esport-e650  KENOO ESPORT E650
+aigo-vk650  AIGO VK650
+jetek-swat-750w-bronze  Jetek SWAT 750W Bronze
+silverstone-da850  SilverStone DA850
+msi-mag-a850gl-pcie5  MSI MAG A850GL PCIE5
+intel-core-i3-13100f  Intel Core i3-13100F
+intel-core-i5-14400f  Intel Core i5-14400F
+intel-core-i7-12700kf  Intel Core i7-12700KF
+amd-ryzen-5-7600  AMD Ryzen 5 7600
+amd-ryzen-7-7700x  AMD Ryzen 7 7700X
+lenovo-ideapad-slim-3-15abr8-82xm00mdvn  Lenovo IdeaPad Slim 3 15ABR8 82XM00MDVN
+asus-vivobook-14-a1405va  ASUS Vivobook 14 A1405VA
+hp-15-fd0235tu-9q970pa  HP 15-fd0235TU 9Q970PA
+acer-aspire-5-a515-58p-56rp  Acer Aspire 5 A515-58P-56RP
+asus-vivobook-15-x1504va-nj1969w  ASUS Vivobook 15 X1504VA-NJ1969W
+asus-vivobook-s14-s3407va-ly146w  ASUS Vivobook S14 S3407VA-LY146W
+dell-inspiron-15-3520-25p2312  Dell Inspiron 15 3520 25P2312
+asus-vivobook-16-x1605va  ASUS Vivobook 16 X1605VA
+asus-gaming-vivobook-16x-k3605vc-rp431w  ASUS Gaming Vivobook 16X K3605VC-RP431W
+dell-vostro-3530  Dell Vostro 3530
+lenovo-ideapad-slim-5-14akp10-83hx00abvn  Lenovo IdeaPad Slim 5 14AKP10 83HX00ABVN
+asus-vivobook-s14-m3407ha  ASUS Vivobook S14 M3407HA
+dell-inspiron-14  Dell Inspiron 14
+asus-expertbook-p1403cva-c5h16-63ws  ASUS ExpertBook P1403CVA-C5H16-63WS
+hp-pavilion-16-af0052tu-ay8c1pa  HP Pavilion 16-af0052TU AY8C1PA
+asus-gaming-v16-v3607vu-rp343w  ASUS Gaming V16 V3607VU-RP343W
+asus-tuf-gaming-a15-fa507nu-lp034w  ASUS TUF Gaming A15 FA507NU-LP034W
+asus-expertbook-p3-pm3406cha-ly0089w  ASUS ExpertBook P3 PM3406CHA-LY0089W
+acer-nitro-v-15-anv15-41-r732  Acer Nitro V 15 ANV15-41-R732
+hp-probook-440-g11-a74b9pt  HP ProBook 440 G11 A74B9PT
+asus-vivobook-s16-m3607ga-sh034w  ASUS Vivobook S16 M3607GA-SH034W
+lenovo-thinkpad-e14-gen-6-21m7004yvn  Lenovo ThinkPad E14 Gen 6 21M7004YVN
+asus-tuf-gaming-f15-fx507vu  ASUS TUF Gaming F15 FX507VU
+lenovo-thinkpad-e14-gen-7  Lenovo ThinkPad E14 Gen 7
+lenovo-loq-15arp10e-83s0004fvn  Lenovo LOQ 15ARP10E 83S0004FVN
+acer-nitro-v-15-anv15-52-73z8  Acer Nitro V 15 ANV15-52-73Z8
+hp-victus-15-fa2732tx-b85lppa  HP Victus 15-fa2732TX B85LPPA
+gigabyte-gaming-a16-cmhi2vn894sh  Gigabyte Gaming A16 CMHI2VN894SH
+lenovo-loq-15ahp9-83dx0085vn  Lenovo LOQ 15AHP9 83DX0085VN
+msi-katana-15-b13vek  MSI Katana 15 B13VEK
+acer-nitro-v-gaming-anv15-51-91t5  Acer Nitro V Gaming ANV15-51-91T5
+acer-nitro-16-an16-41-r5m4  Acer Nitro 16 AN16-41-R5M4
+asus-zenbook-14-ux3405ca-st1713w  ASUS Zenbook 14 UX3405CA-ST1713W
+lenovo-legion-5-15ahp9  Lenovo Legion 5 15AHP9
+acer-nitro-v-16-propanel-anv16-41-r4kd  Acer Nitro V 16 ProPanel ANV16-41-R4KD
+acer-predator-helios-neo-16-phn16-71-78g4  Acer Predator Helios Neo 16 PHN16-71-78G4
+asus-vivobook-s16-m3607ha-sh186w  ASUS Vivobook S16 M3607HA-SH186W
+acer-nitro-v-15-anv15-51-55ca  Acer Nitro V 15 ANV15-51-55CA
+lenovo-loq-15  Lenovo LOQ 15
+hp-victus-15-fa2732tx  HP Victus 15-fa2732TX
+hp-15-fd1288tu-c2cv7pa  HP 15-fd1288TU C2CV7PA
+hp-pavilion-16-af0052tu  HP Pavilion 16-af0052TU
+macbook-air-m4-13-inch-16gb-256gb  MacBook Air M4 13 inch 16GB/256GB
+macbook-air-m4-13-inch-16gb-512gb  MacBook Air M4 13 inch 16GB/512GB
+acer-predator-helios-neo-16  Acer Predator Helios Neo 16
+pc-it-01  Starter Dev Set
+pc-it-02  Fullstack Web & Mobile Developer
+pc-it-03  DevOps & System Security Workstation
+pc-it-04  AI & Machine Learning Special Rig
+pc-it-05  Mini ITX Portable Dev Kit
+pc-kt3d-01  AutoCAD & SketchUp Starter Kit
+pc-kt3d-02  3D Architectural Renderer
+pc-kt3d-03  BIM & Revit Professional Workstation
+pc-kt3d-04  Lumion & Unreal Engine 5 Heavy Workstation
+pc-kt3d-05  Dual Screen Studio Workstation
+pc-kd-01  Basic Business Essential
+pc-kd-02  Business Pro Manager
+pc-kd-03  Dell OptiPlex Enterprise Edition
+pc-kd-04  Big Data & Market Analytics Suite
+pc-kd-05  Executive All-in-One Desk Set
+pc-tc-01  Kế Toán Thuế & MISA Standard
+pc-tc-02  Dual Monitor Finance Analyst
+pc-tc-03  Kiểm Toán Viên Chuyên Nghiệp (Big 4 Set)
+pc-tc-04  Fintech & Trading Multi-Screen Suite
+pc-tc-05  Giao Dịch Viên Ngân Hàng Compact Set
+pc-mk-01  Content Creator & Digital Ads Starter
+pc-mk-02  Video Editor & TikTok Creator Rig
+pc-mk-03  Media Studio Pro (2D Graphic & Motion)
+pc-mk-04  Livestream & Event Streamer Workstation
+pc-mk-05  Copywriter & PR Specialist Compact
+pc-lu-01  Luật Sư Tập Sự & Sinh Viên Luật Basic
+pc-lu-02  Chuyên Viên Pháp Chế Doanh Nghiệp
+pc-lu-03  Văn Phòng Công Chứng & Luật Sư Tranh Tụng
+pc-lu-04  Văn Phòng Pháp Lý Cao Cấp
+pc-lu-05  Mini PC Pháp Lý Di Động
+pc-nn-01  Sinh Viên Ngoại Ngữ & Dịch Thuật Basic
+pc-nn-02  Biên - Phiên Dịch Viên Chuyên Nghiệp
+pc-nn-03  Nghiên Cứu Xã Hội & Tâm Lý Học Workstation
+pc-nn-04  Quan Hệ Quốc Tế & Ngoại Giao Suite
+pc-nn-05  Mini Silent Desk cho Người Làm Sách/Báo
+pc-dl-01  Lễ Tân Khách Sạn & Ticketing Set
+pc-dl-02  Điều Hành Tour & Booking Agent
+pc-dl-03  POS Quầy Lễ Tân Khách Sạn AIO
+pc-dl-04  Thiết Kế Tour & Truyền Thông Du Lịch
+pc-dl-05  Tổng Đài Viên Chăm Sóc Khách Hàng (Call Center)
+pc-sp-01  Giáo Viên Online & Giảng Dạy Basic
+pc-sp-02  Soạn Giáo Án Điện Tử & Bài Giảng Elearning
+pc-sp-03  Phòng Máy Tính Trường Học / Trung Tâm
+pc-sp-04  Giảng Viên STEM & Mô Phỏng Khoa Học
+pc-sp-05  Mini PC Giảng Đường Di Động

@@ -6,6 +6,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from 'react-hot-toast';
 import { getProducts, getCategories } from "@/lib/products";
 import "./globals.css";
+import BotpressChat from "./BotpressChat";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -48,6 +49,7 @@ export default async function RootLayout({ children }) {
 
           <Toaster position="bottom-right" />
         </CartProvider>
+        <BotpressChat />
         
       </body>
     </html>
