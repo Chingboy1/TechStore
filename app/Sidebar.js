@@ -24,14 +24,16 @@ export default function Sidebar({ categories }) {
         ></div>
       )}
 
-      <aside
+      {/* THANH SIDEBAR HÒA VÀO TRANG */}
+         <aside
         onMouseEnter={() => setIsHovered(true)} 
         onMouseLeave={() => setIsHovered(false)}
-        className={`fixed top-4 left-4 bottom-4 bg-white/70 dark:bg-[#0a0a0a]/80 backdrop-blur-xl rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)] border border-transparent dark:border-gray-800/30 transition-all duration-300 ease-in-out z-[60] flex flex-col py-4 overflow-hidden 
-        ${isMenuOpen ? "translate-x-0" : "-translate-x-[150%] md:translate-x-0"} 
+        className={`fixed top-0 left-0 h-screen bg-transparent transition-all duration-300 ease-in-out z-[60] flex flex-col py-4 overflow-hidden 
+        ${isMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"} 
         ${isExpanded ? "w-[260px]" : "w-[70px]"}`}
       >
-        <div className="flex items-center justify-between px-4 mb-6 h-10 flex-shrink-0">
+      
+        <div className="flex items-center justify-between px-4 mb-6 h-10 flex-shrink-0 mt-2">
           <div 
             onClick={() => setIsMenuOpen(!isMenuOpen)} 
             className="w-10 h-10 bg-gray-200/50 hover:bg-gray-300/50 dark:bg-[#2c2c2e] dark:hover:bg-[#3a3a3c] rounded-full flex items-center justify-center flex-shrink-0 cursor-pointer transition-colors"

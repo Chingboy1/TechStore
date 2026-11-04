@@ -175,8 +175,8 @@ export default function Header({ products }) {
   }, []);
 
   return (
-    <header 
-      className="sticky top-0 z-50 bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50 transition-colors duration-300"
+        <header 
+      className="sticky top-0 z-50 bg-[#f5f5f7]/80 dark:bg-[#0a0a0a]/80 backdrop-blur-md border-b border-gray-200/30 dark:border-gray-800/30 transition-colors duration-300"
       onMouseLeave={handleMouseLeave}
     >
       {/* Đã sửa gap-8 thành gap-2 md:gap-8 để vừa mobile */}
