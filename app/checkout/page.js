@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "../CartContext";
-import { supabase } from "@/lib/supabase"; // Import supabase để lấy user
+import { supabase } from "@/lib/supabase";
+import { Lock } from "lucide-react";
 
 const money = (n) => n.toLocaleString("vi-VN") + " đ";
 
@@ -11,6 +12,19 @@ export default function CheckoutPage() {
   const [order, setOrder] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  
+  const [user, setUser] = useState(null);
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
+  // Kiểm tra trạng thái đăng nhập khi vào trang
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      setUser(data.user);
+      setCheckingAuth(false);
+    };
+    checkUser();
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -19,9 +33,6 @@ export default function CheckoutPage() {
     setError("");
 
     try {
-      // LẤY USER ID NẾU KHÁCH ĐÃ ĐĂNG NHẬP
-      const { data: { user } } = await supabase.auth.getUser();
-
       const res = await fetch("/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -30,7 +41,7 @@ export default function CheckoutPage() {
           phone: f.get("phone"),
           address: f.get("address"),
           items: items.map(({ id, label, color, qty }) => ({ id, label, color, qty })),
-          user_id: user ? user.id : null, // Gửi user_id xuống API
+          user_id: user.id, // Bắt buộc phải có user_id
         }),
       });
       
@@ -60,9 +71,34 @@ export default function CheckoutPage() {
     }
   }
 
-  // ==========================================
-  // MÀN HÌNH 1: ĐẶT HÀNG THÀNH CÔNG
-  // ==========================================
+  // Đang kiểm tra đăng nhập
+  if (checkingAuth) {
+    return <div className="min-h-screen flex items-center justify-center bg-[#f5f5f7] dark:bg-[#0a0a0a] text-gray-500">Đang kiểm tra...</div>;
+  }
+
+  // CHƯA ĐĂNG NHẬP -> Bắt buộc đăng nhập
+  if (!user) {
+    return (
+      <main className="min-h-screen bg-[#f5f5f7] dark:bg-[#0a0a0a] flex items-center justify-center p-4">
+        <div className="bg-white dark:bg-[#1c1c1e] p-10 rounded-3xl shadow-xl w-full max-w-md border border-gray-100 dark:border-gray-800 text-center">
+          <div className="w-20 h-20 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Lock size={40} />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Yêu cầu đăng nhập</h2>
+          <p className="text-gray-500 mb-8">Bạn cần đăng nhập hoặc tạo tài khoản để có thể tiến hành đặt hàng và theo dõi đơn hàng của mình.</p>
+          
+          <Link href="/login?redirect=/checkout" className="block w-full bg-[#0071e3] hover:bg-[#0077ED] text-white font-bold py-3 rounded-xl transition-colors mb-3">
+            Đăng nhập ngay
+          </Link>
+          <Link href="/cart" className="block w-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium py-3 rounded-xl transition-colors">
+            Quay lại giỏ hàng
+          </Link>
+        </div>
+      </main>
+    );
+  }
+
+  // MÀN HÌNH ĐẶT HÀNG THÀNH CÔNG
   if (order) {
     return (
       <main className="min-h-screen bg-[#f5f5f7] dark:bg-[#0a0a0a] py-12 px-4 transition-colors duration-300">
@@ -115,9 +151,7 @@ export default function CheckoutPage() {
     );
   }
 
-  // ==========================================
-  // MÀN HÌNH 2: GIỎ HÀNG TRỐNG
-  // ==========================================
+  // GIỎ HÀNG TRỐNG
   if (items.length === 0) {
     return (
       <main className="min-h-screen bg-[#f5f5f7] dark:bg-[#0a0a0a] flex flex-col items-center justify-center px-4">
@@ -129,9 +163,7 @@ export default function CheckoutPage() {
     );
   }
 
-  // ==========================================
-  // MÀN HÌNH 3: FORM ĐIỀN THÔNG TIN
-  // ==========================================
+  // FORM ĐIỀN THÔNG TIN ĐẶT HÀNG
   return (
     <main className="min-h-screen bg-[#f5f5f7] dark:bg-[#0a0a0a] py-12 px-4 transition-colors duration-300">
       <div className="max-w-4xl mx-auto">
@@ -140,22 +172,20 @@ export default function CheckoutPage() {
         </Link>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          
-          {/* Cột trái: Form thông tin */}
           <div className="bg-white dark:bg-[#1c1c1e] p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800">
             <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-3">Thông tin đặt hàng</h1>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Họ và tên</label>
-                <input name="name" required placeholder="VD: Nguyễn Văn A" className="w-full border border-gray-300 dark:border-gray-700 rounded-xl px-4 py-3 bg-transparent text-gray-900 dark:text-white focus:outline-none focus:border-[#0071e3] focus:ring-1 focus:ring-[#0071e3] transition-colors" />
+                <input name="name" required placeholder="VD: Nguyễn Văn A" className="w-full border border-gray-300 dark:border-gray-700 rounded-xl px-4 py-3 bg-transparent text-gray-900 dark:text-white focus:outline-none focus:border-[#0071e3] transition-colors" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Số điện thoại</label>
-                <input name="phone" required placeholder="VD: 0987654321" className="w-full border border-gray-300 dark:border-gray-700 rounded-xl px-4 py-3 bg-transparent text-gray-900 dark:text-white focus:outline-none focus:border-[#0071e3] focus:ring-1 focus:ring-[#0071e3] transition-colors" />
+                <input name="phone" required placeholder="VD: 0987654321" className="w-full border border-gray-300 dark:border-gray-700 rounded-xl px-4 py-3 bg-transparent text-gray-900 dark:text-white focus:outline-none focus:border-[#0071e3] transition-colors" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Địa chỉ nhận hàng</label>
-                <input name="address" required placeholder="Số nhà, tên đường, quận/huyện..." className="w-full border border-gray-300 dark:border-gray-700 rounded-xl px-4 py-3 bg-transparent text-gray-900 dark:text-white focus:outline-none focus:border-[#0071e3] focus:ring-1 focus:ring-[#0071e3] transition-colors" />
+                <input name="address" required placeholder="Số nhà, tên đường, quận/huyện..." className="w-full border border-gray-300 dark:border-gray-700 rounded-xl px-4 py-3 bg-transparent text-gray-900 dark:text-white focus:outline-none focus:border-[#0071e3] transition-colors" />
               </div>
               
               {error && <p className="text-red-500 text-sm font-medium">{error}</p>}
@@ -166,7 +196,6 @@ export default function CheckoutPage() {
             </form>
           </div>
 
-          {/* Cột phải: Tóm tắt đơn */}
           <div>
             <div className="bg-white dark:bg-[#1c1c1e] p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 sticky top-24">
               <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-3">Đơn hàng của bạn</h2>
@@ -193,7 +222,6 @@ export default function CheckoutPage() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </main>
