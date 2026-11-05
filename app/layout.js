@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from 'react-hot-toast';
 import { getProducts, getCategories } from "@/lib/products";
+import Script from "next/script"; // Bắt buộc phải import Script của Next.js
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -32,7 +33,6 @@ export default async function RootLayout({ children }) {
         <CartProvider>
           <Sidebar categories={categories} /> 
           
-          {/* Đẩy nội dung sang phải 70px trên màn hình lớn (md) để chừa chỗ cho Sidebar */}
           <div className="ml-0 md:ml-[70px] flex flex-col min-h-screen transition-all duration-300">
             
             <Header products={searchList} /> 
@@ -46,6 +46,17 @@ export default async function RootLayout({ children }) {
 
           <Toaster position="bottom-right" />
         </CartProvider>
+
+        {/* ================= TÍCH HỢP CHATBOT BOTPRESS ================= */}
+        <Script 
+          src="https://cdn.botpress.cloud/webchat/v3.7/inject.js" 
+          strategy="afterInteractive" 
+        />
+        <Script 
+          src="https://files.bpcontent.cloud/2026/10/22/09/20261022095005-MVU5GTED.js" 
+          strategy="afterInteractive" 
+        />
+        {/* ============================================================= */}
         
       </body>
     </html>
