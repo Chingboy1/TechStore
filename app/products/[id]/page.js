@@ -4,7 +4,7 @@ import Link from "next/link";
 import AddToCart from "../../AddToCart";
 import ProductImage from "../../ProductImage";
 import FadeIn from "../../FadeIn";
-import { CheckCircle2, XCircle, ChevronRight } from "lucide-react";
+import { CheckCircle2, XCircle } from "lucide-react";
 
 export default async function ProductPage({ params }) {
   const { id } = await params;
@@ -32,7 +32,7 @@ export default async function ProductPage({ params }) {
         {/* Cột trái: Ảnh sản phẩm (Phong cách HUD quân sự) */}
         <FadeIn delay={0.1}>
           <div 
-            className="sticky top-24 bg-[#111] border border-gray-800 rounded-sm p-8 flex items-center justify-center min-h-[400px] md:min-h-[500px] shadow-[0_0_30px_rgba(220,38,38,0.1)] group hover:border-red-600 transition-colors duration-500"
+            className="sticky top-24 bg-[#111] border border-gray-800 rounded-sm p-6 flex items-center justify-center min-h-[400px] md:min-h-[500px] shadow-[0_0_30px_rgba(220,38,38,0.1)] group hover:border-red-600 transition-colors duration-500"
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%)' }}
           >
             <div className="w-full h-full bg-white p-4 rounded-sm border border-gray-700 group-hover:border-red-500 transition-colors">
@@ -41,6 +41,7 @@ export default async function ProductPage({ params }) {
                 category={p.category} 
                 name={p.name} 
                 imageSrc={p.image} 
+                imageUrl={p.image_url} // LẤY ẢNH TỪ SUPABASE STORAGE
                 className="w-full h-full max-h-[450px] object-contain drop-shadow-[0_0_20px_rgba(220,38,38,0.3)]" 
               />
             </div>
