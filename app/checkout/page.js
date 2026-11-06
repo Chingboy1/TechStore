@@ -33,17 +33,36 @@ export default function CheckoutPage() {
     setError("");
 
     try {
-      const res = await fetch("/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: f.get("name"),
-          phone: f.get("phone"),
-          address: f.get("address"),
-          items: items.map(({ id, label, color, qty }) => ({ id, label, color, qty })),
-          user_id: user.id, // Bắt buộc phải có user_id
-        }),
-      });
+  // Lấy phiên đăng nhập để máy chủ xác minh khách hàng
+  const {
+    data: { session },
+    error: sessionError,
+  } = await supabase.auth.getSession();
+
+  if (sessionError || !session?.access_token) {
+    throw new Error(
+      "Phiên đăng nhập đã hết hạn. Bạn vui lòng đăng nhập lại."
+    );
+  }
+
+  const res = await fetch("/api/orders", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${session.access_token}`,
+    },
+    body: JSON.stringify({
+      name: f.get("name"),
+      phone: f.get("phone"),
+      address: f.get("address"),
+      items: items.map(({ id, label, color, qty }) => ({
+        id,
+        label,
+        color,
+        qty,
+      })),
+    }),
+  });
       
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Đặt hàng thất bại");

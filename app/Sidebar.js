@@ -2,11 +2,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "./CartContext";
-import { Smartphone, Tablet, Laptop, Monitor, Cpu, Headphones, Mouse, Keyboard, Speaker, Glasses, LayoutGrid, Menu, X } from "lucide-react";
+import { Smartphone, Tablet, Laptop, Monitor, Cpu, Headphones, Mouse, Keyboard, Glasses, LayoutGrid, Menu, X } from "lucide-react";
 
 const iconMap = {
   "dien-thoai": Smartphone, "may-tinh-bang": Tablet, "laptop": Laptop, "pc-theo-nganh": Monitor,
-  "linh-kien-pc": Cpu, "tai-nghe": Headphones, "chuot": Mouse, "ban-phim": Keyboard, "loa": Speaker, "kinh-ai": Glasses,
+  "linh-kien-pc": Cpu, "tai-nghe": Headphones, "chuot": Mouse, "ban-phim": Keyboard, "kinh-ai": Glasses,
 };
 
 export default function Sidebar({ categories }) {
