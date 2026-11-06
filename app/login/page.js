@@ -21,19 +21,65 @@ function LoginForm() {
     e.preventDefault();
     setLoading(true);
     setError("");
+if (isLogin) {
+  try {
+    const { data, error: loginError } =
+      await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (isLogin) {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) setError("Sai email hoặc mật khẩu. Vui lòng thử lại!");
-      else {
-        router.push(redirectUrl); // Chuyển về trang trước đó (VD: /checkout)
-        router.refresh();
-      }
+    if (loginError || !data.session) {
+      setError(
+        "Đăng nhập chưa thành công. Kiểm tra email, mật khẩu và xác nhận email."
+      );
     } else {
-      const { error } = await supabase.auth.signUp({ email, password });
-      if (error) setError(error.message);
-      else alert("Đăng ký thành công! Bạn có thể đăng nhập ngay.");
+      // API welcome kiểm tra bảng để tránh gửi thư trùng.
+      // Lỗi gửi thư không ngăn khách đăng nhập.
+      try {
+        const response = await fetch("/api/welcome", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${data.session.access_token}`,
+          },
+          signal: AbortSignal.timeout(12000),
+        });
+
+        if (!response.ok) {
+          console.warn("Chưa xử lý được email chào mừng.");
+        } else {
+          const result = await response.json();
+
+          if (!["accepted", "skipped"].includes(result.status)) {
+            console.warn("Email chào mừng cần kiểm tra trong Make.");
+          }
+        }
+      } catch {
+        console.warn("Chưa xác nhận được kết quả gửi email chào mừng.");
+      }
+
+      // Chỉ cho chuyển hướng đến đường dẫn trong website.
+      const safeRedirect =
+        redirectUrl.startsWith("/") &&
+        !redirectUrl.startsWith("//") &&
+        !redirectUrl.includes("\\")
+          ? redirectUrl
+          : "/profile";
+
+      router.push(safeRedirect);
+      router.refresh();
     }
+  } catch {
+    setError("Không thể kết nối. Bạn vui lòng thử lại.");
+  }
+}
+     else {
+  alert(
+    "Vui lòng kiểm tra email để xác nhận tài khoản, sau đó quay lại website đăng nhập."
+  );
+  setIsLogin(true);
+  setPassword("");
+}
     setLoading(false);
   };
 
