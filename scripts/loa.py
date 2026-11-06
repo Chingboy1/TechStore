@@ -1,3 +1,4 @@
+
 import os
 import json
 import sys
@@ -6,15 +7,21 @@ from pathlib import Path
 from supabase import create_client
 from dotenv import load_dotenv
 
-# Tự động tìm file .env ở thư mục cha (my-shop1)
-env_path = Path(__file__).resolve().parent.parent / '.env'
-load_dotenv(dotenv_path=env_path)
+# Tự động tìm file .env ở thư mục hiện tại hoặc các thư mục cha
+load_dotenv() 
 
-SUPABASE_URL = os.getenv("https://jnoskrblfxunwaecklwd.supabase.co")
-SUPABASE_KEY = os.getenv("sb_secret_UqrGySdWXE8GkhiqVVhVUA_ajWvx4iV")
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 CATEGORY = os.getenv("CATEGORY", "loa")
 SUBCATEGORY = os.getenv("SUBCATEGORY", None)
 GROUP_NAME = os.getenv("GROUP_NAME", None)
+
+# In ra màn hình để kiểm tra (che bớt key cho an toàn)
+if SUPABASE_URL and SUPABASE_KEY:
+    print(f"✅ Đã đọc được URL: {SUPABASE_URL}")
+    print(f"✅ Đã đọc được KEY: {SUPABASE_KEY[:10]}...")
+else:
+    print("❌ Vẫn không đọc được biến môi trường. Hãy kiểm tra lại file .env")
 
 def main():
     parser = argparse.ArgumentParser()

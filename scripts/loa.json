@@ -1,0 +1,92 @@
+[
+  {
+    "ten": "Logitech Z120",
+    "loai_loa": "Loa vi tính 2.0",
+    "thong_so": "Cấp nguồn USB; nhận âm thanh qua jack 3,5mm",
+    "mo_ta": "Loa nhỏ gọn cho bàn học hoặc laptop",
+    "gia": 299000,
+    "uu_diem": "Nhỏ gọn, dễ lắp đặt, cấp nguồn USB",
+    "nhuoc_diem": "Âm lượng và bass hạn chế"
+  },
+  {
+    "ten": "Edifier R19U",
+    "loai_loa": "Loa vi tính 2.0",
+    "thong_so": "Kết nối âm thanh 3,5mm; cấp nguồn USB",
+    "mo_ta": "Loa để bàn cho học tập, gọi video và nghe nhạc",
+    "gia": 732000,
+    "uu_diem": "Âm thanh rõ; thiết kế gọn",
+    "nhuoc_diem": "Bass không mạnh"
+  },
+  {
+    "ten": "Creative Pebble 2.0",
+    "loai_loa": "Loa vi tính 2.0",
+    "thong_so": "Kết nối 3,5mm; cấp nguồn USB; hướng loa chếch lên",
+    "mo_ta": "Loa nhỏ cho bàn học hoặc bàn máy tính gọn",
+    "gia": 750000,
+    "uu_diem": "Thiết kế gọn; dễ kết nối; hướng âm thanh về phía người nghe",
+    "nhuoc_diem": "Không có loa siêu trầm"
+  },
+  {
+    "ten": "Creative Pebble V2",
+    "loai_loa": "Loa vi tính 2.0",
+    "thong_so": "Cấp nguồn USB-C; kết nối âm thanh có dây",
+    "mo_ta": "Loa để bàn nhỏ gọn cho học tập và giải trí",
+    "gia": 770000,
+    "uu_diem": "Gọn; âm thanh rõ; tiện cấp nguồn USB",
+    "nhuoc_diem": "Không phù hợp phòng lớn"
+  },
+  {
+    "ten": "Creative Pebble Plus 2.1",
+    "loai_loa": "Bộ loa vi tính 2.1",
+    "thong_so": "Hai loa vệ tinh và một loa siêu trầm; kết nối có dây",
+    "mo_ta": "Phù hợp nghe nhạc, xem phim và chơi game tại bàn",
+    "gia": 1400000,
+    "uu_diem": "Có loa siêu trầm; bass mạnh hơn loa 2.0",
+    "nhuoc_diem": "Tốn chỗ; có thêm dây kết nối"
+  },
+  {
+    "ten": "Logitech Z213",
+    "loai_loa": "Bộ loa vi tính 2.1",
+    "thong_so": "Hai loa vệ tinh; loa siêu trầm; bộ điều khiển âm lượng riêng",
+    "mo_ta": "Loa để bàn cho người thích âm bass rõ hơn",
+    "gia": 425000,
+    "uu_diem": "Có loa siêu trầm; điều chỉnh âm lượng tiện",
+    "nhuoc_diem": "Thiết kế cũ; có nhiều dây kết nối"
+  },
+  {
+    "ten": "Creative Pebble Pro",
+    "loai_loa": "Loa vi tính 2.0",
+    "thong_so": "Hỗ trợ Bluetooth; có nhiều cổng kết nối; cấp nguồn USB",
+    "mo_ta": "Loa nhỏ gọn dùng với máy tính hoặc thiết bị di động",
+    "gia": 1790000,
+    "uu_diem": "Có Bluetooth; nhiều cổng; âm thanh rõ",
+    "nhuoc_diem": "Giá cao hơn loa USB cơ bản"
+  },
+  {
+    "ten": "Edifier R1280T",
+    "loai_loa": "Loa bookshelf 2.0",
+    "thong_so": "Kết nối RCA; điều khiển âm lượng và âm sắc; cần nguồn điện riêng",
+    "mo_ta": "Loa nghe nhạc và học tập cho bàn lớn hoặc phòng nhỏ",
+    "gia": 1990000,
+    "uu_diem": "Âm thanh cân bằng; công suất tốt; có điều khiển",
+    "nhuoc_diem": "Kích thước lớn; cần nguồn điện riêng"
+  },
+  {
+    "ten": "Microlab B16",
+    "loai_loa": "Loa vi tính 2.0",
+    "thong_so": "Loa để bàn nhỏ; kết nối âm thanh có dây",
+    "mo_ta": "Lựa chọn cơ bản cho bàn học nhỏ",
+    "gia": 450000,
+    "uu_diem": "Giá thấp; gọn; dễ bố trí",
+    "nhuoc_diem": "Âm thanh cơ bản; bass yếu"
+  },
+  {
+    "ten": "Logitech Z407",
+    "loai_loa": "Bộ loa vi tính 2.1",
+    "thong_so": "Hỗ trợ Bluetooth; có bộ điều khiển không dây; gồm loa siêu trầm",
+    "mo_ta": "Loa để bàn cho học tập, nghe nhạc và xem phim",
+    "gia": 1890000,
+    "uu_diem": "Có Bluetooth; điều khiển thuận tiện; cấu hình loa 2.1",
+    "nhuoc_diem": "Giá cao hơn loa để bàn phổ thông"
+  }
+]
