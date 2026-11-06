@@ -18,7 +18,7 @@ export default async function HomePage() {
         <FadeIn>
           <div className="relative mb-10 flex justify-center group">
             <img 
-              src="/images/doom-banner.gif" 
+              src="/images/doom.gif" 
               alt="DOOM Slayer" 
               className="w-full max-w-[850px] object-contain relative z-10 transition-transform duration-700 group-hover:scale-105 mix-blend-screen drop-shadow-[0_0_40px_rgba(220,38,38,0.7)]" 
             />
