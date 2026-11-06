@@ -1,99 +1,291 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import { randomUUID } from "node:crypto";
 
-// Tạm thời comment phần Resend lại nếu chưa cài được thư viện
-// import { Resend } from "resend";
-// import { orderNotificationEmail } from "@/lib/email-template";
-// const resend = new Resend(process.env.RESEND_API_KEY);
+export const runtime = "nodejs";
+
+const money = (value) =>
+  Number(value).toLocaleString("vi-VN") + " ₫";
+
+const fail = (message, status) =>
+  NextResponse.json({ error: message }, { status });
 
 export async function POST(request) {
-  let body;
-  try { body = await request.json(); } catch { return NextResponse.json({ error: "Dữ liệu không hợp lệ" }, { status: 400 }); }
+  // Kiểm tra cấu hình trước khi tạo đơn
+  const webhookUrl = process.env.MAKE_WEBHOOK_URL?.trim();
+  const webhookKey = process.env.MAKE_WEBHOOK_API_KEY?.trim();
 
-  const name = String(body.name ?? "").trim();
-  const phone = String(body.phone ?? "").replace(/\s/g, "");
-  const address = String(body.address ?? "").trim();
-  const items = Array.isArray(body.items) ? body.items : [];
-
-  if (!name || !address) return NextResponse.json({ error: "Vui lòng nhập đủ họ tên và địa chỉ" }, { status: 400 });
-  if (!/^(0\d{9}|\+84\d{9})$/.test(phone)) return NextResponse.json({ error: "Số điện thoại không hợp lệ" }, { status: 400 });
-  if (items.length === 0 || items.length > 50) return NextResponse.json({ error: "Giỏ hàng không hợp lệ" }, { status: 400 });
-
-  const ids = [...new Set(items.map((i) => String(i.id)))];
-  const { data: products, error: e0 } = await supabaseAdmin.from("products").select("id, name, price, variants").in("id", ids);
-  if (e0) return NextResponse.json({ error: "Lỗi máy chủ" }, { status: 500 });
-
-  const byId = new Map(products.map((p) => [p.id, p]));
-  const lines = [];
-
-  for (const i of items) {
-    const p = byId.get(String(i.id));
-    const qty = Number(i.qty);
-    if (!p || !Number.isInteger(qty) || qty < 1) return NextResponse.json({ error: "Sản phẩm không hợp lệ" }, { status: 400 });
-
-    let price = p.price;
-    let label = null;
-    if (p.variants?.length) {
-      const v = p.variants.find((x) => x.label === i.label);
-      if (!v) return NextResponse.json({ error: `Vui lòng chọn phiên bản cho ${p.name}` }, { status: 400 });
-      price = v.price; label = v.label;
-    }
-    if (price == null) return NextResponse.json({ error: `${p.name} chưa có giá` }, { status: 400 });
-
-    lines.push({ 
-      product_id: p.id, 
-      product_name: p.name, 
-      variant_label: label, 
-      // color: i.color || null, // Tạm thời ẩn màu sắc nếu database chưa có cột này
-      price, 
-      qty 
-    });
+  if (!webhookUrl || !webhookKey) {
+    console.error("Thiếu cấu hình kết nối Make");
+    return fail("Hệ thống đặt hàng chưa sẵn sàng.", 503);
   }
 
-  const total = lines.reduce((s, l) => s + l.price * l.qty, 0);
-  const code = "DH" + Date.now().toString().slice(-7);
+  // Xác minh phiên đăng nhập do checkout gửi lên
+  const authorization = request.headers.get("authorization") || "";
+  const token = authorization.match(/^Bearer\s+(\S+)$/i)?.[1];
 
-    // Thêm user_id từ body gửi lên
-  const userId = body.user_id || null; 
-
-  const { data: order, error: e1 } = await supabaseAdmin
-    .from("orders")
-    .insert({ 
-      code, 
-      customer_name: name, 
-      phone, 
-      address, 
-      total, 
-      status: 'pending',
-      user_id: userId // Lưu user_id vào database
-    })
-    .select("id, code")
-    .single();
-  if (e1) {
-    console.error("Lỗi lưu bảng orders:", e1);
-    return NextResponse.json({ error: "Không lưu được đơn hàng" }, { status: 500 });
+  if (!token) {
+    return fail("Vui lòng đăng nhập để đặt hàng.", 401);
   }
 
-  const { error: e2 } = await supabaseAdmin.from("order_items").insert(lines.map((l) => ({ ...l, order_id: order.id })));
-  if (e2) {
-    console.error("Lỗi lưu bảng order_items:", e2);
-    await supabaseAdmin.from("orders").delete().eq("id", order.id);
-    return NextResponse.json({ error: "Không lưu được đơn hàng" }, { status: 500 });
-  }
-
-  // Phần gửi Email sẽ được bật lại sau khi cài được Resend
-  /*
   try {
-    await resend.emails.send({
-      from: 'TechStore <onboarding@resend.dev>',
-      to: [process.env.EMAIL_OWNER],
-      subject: `[Đơn hàng mới] ${order.code} - ${name}`,
-      html: orderNotificationEmail(...),
-    });
-  } catch (emailError) {
-    console.error("Lỗi gửi email:", emailError);
-  }
-  */
+    const {
+      data: { user },
+      error: authError,
+    } = await supabaseAdmin.auth.getUser(token);
 
-  return NextResponse.json({ code: order.code, total, items: lines });
+    if (authError || !user) {
+      return fail("Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại.", 401);
+    }
+
+    if (!user.email) {
+      return fail("Tài khoản chưa có email nhận thông tin đơn hàng.", 400);
+    }
+
+    let body;
+
+    try {
+      body = await request.json();
+    } catch {
+      return fail("Dữ liệu không hợp lệ.", 400);
+    }
+
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
+      return fail("Dữ liệu không hợp lệ.", 400);
+    }
+
+    const name =
+      typeof body.name === "string" ? body.name.trim() : "";
+
+    const phone =
+      typeof body.phone === "string"
+        ? body.phone.replace(/\s/g, "")
+        : "";
+
+    const address =
+      typeof body.address === "string" ? body.address.trim() : "";
+
+    const items = Array.isArray(body.items) ? body.items : [];
+
+    if (!name || name.length > 150 || !address || address.length > 1000) {
+      return fail("Vui lòng kiểm tra họ tên và địa chỉ nhận hàng.", 400);
+    }
+
+    if (!/^(0\d{9}|\+84\d{9})$/.test(phone)) {
+      return fail("Số điện thoại không hợp lệ.", 400);
+    }
+
+    if (
+      items.length === 0 ||
+      items.length > 50 ||
+      items.some(
+        (item) =>
+          !item ||
+          !["string", "number"].includes(typeof item.id) ||
+          !String(item.id).trim() ||
+          !Number.isInteger(Number(item.qty)) ||
+          Number(item.qty) < 1 ||
+          Number(item.qty) > 100
+      )
+    ) {
+      return fail("Giỏ hàng không hợp lệ.", 400);
+    }
+
+    // Luôn lấy giá từ database
+    const ids = [...new Set(items.map((item) => String(item.id)))];
+
+    const { data: products, error: productError } = await supabaseAdmin
+      .from("products")
+      .select("id, name, price, variants")
+      .in("id", ids);
+
+    if (productError) {
+console.error("Không đọc được sản phẩm:", productError.code);
+      return fail("Không thể kiểm tra sản phẩm lúc này.", 500);
+    }
+
+    const byId = new Map(
+      (products || []).map((product) => [String(product.id), product])
+    );
+
+    const lines = [];
+
+    for (const item of items) {
+      const product = byId.get(String(item.id));
+
+      if (!product) {
+        return fail("Có sản phẩm không còn tồn tại.", 400);
+      }
+
+      let rawPrice = product.price;
+      let label = null;
+
+      if (Array.isArray(product.variants) && product.variants.length > 0) {
+        const variant = product.variants.find(
+          (entry) => entry.label === item.label
+        );
+
+        if (!variant) {
+          return fail(`Vui lòng chọn phiên bản cho ${product.name}.`, 400);
+        }
+
+        rawPrice = variant.price;
+        label = variant.label;
+      }
+
+      const price = Number(rawPrice);
+
+      if (
+        rawPrice == null ||
+        rawPrice === "" ||
+        !Number.isSafeInteger(price) ||
+        price <= 0
+      ) {
+        return fail(`${product.name} chưa có giá hợp lệ.`, 400);
+      }
+
+      lines.push({
+        product_id: product.id,
+        product_name: product.name,
+        variant_label: label,
+        price,
+        qty: Number(item.qty),
+      });
+    }
+
+    const total = lines.reduce(
+      (sum, line) => sum + line.price * line.qty,
+      0
+    );
+
+    if (!Number.isSafeInteger(total)) {
+      return fail("Tổng tiền không hợp lệ.", 400);
+    }
+
+    const code =
+      "DH" + randomUUID().replaceAll("-", "").slice(0, 12).toUpperCase();
+
+    // ID khách hàng lấy từ tài khoản đã xác minh
+    const { data: order, error: orderError } = await supabaseAdmin
+      .from("orders")
+      .insert({
+        code,
+        customer_name: name,
+        phone,
+        address,
+        total,
+        status: "pending",
+        user_id: user.id,
+      })
+      .select("id, code")
+      .single();
+
+    if (orderError) {
+      console.error("Không lưu được đơn:", orderError.code);
+      return fail("Không lưu được đơn hàng.", 500);
+    }
+
+    const { error: itemsError } = await supabaseAdmin
+      .from("order_items")
+      .insert(
+        lines.map((line) => ({
+          ...line,
+          order_id: order.id,
+        }))
+      );
+
+    if (itemsError) {
+      console.error("Không lưu được chi tiết đơn:", itemsError.code);
+
+      const { error: rollbackError } = await supabaseAdmin
+        .from("orders")
+        .delete()
+        .eq("id", order.id);
+
+      if (rollbackError) {
+        console.error("Cần kiểm tra đơn lưu dở:", order.code);
+      }
+
+      return fail("Không lưu được chi tiết đơn hàng.", 500);
+    }
+
+    const createdAt = new Intl.DateTimeFormat("vi-VN", {
+      timeZone: "Asia/Ho_Chi_Minh",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+hour12: false,
+    }).format(new Date());
+
+    // Giữ tên trường tương ứng với các biến đang dùng trong Make
+    const payload = {
+      event: "order_created",
+      email: user.email,
+      name,
+      order_id: order.code,
+      product_info: lines
+        .map((line) => {
+          const variant = line.variant_label
+            ? ` (${line.variant_label})`
+            : "";
+
+          return `${line.product_name}${variant} × ${line.qty}`;
+        })
+        .join("; "),
+      quantity: String(
+        lines.reduce((sum, line) => sum + line.qty, 0)
+      ),
+      product_amount: money(total),
+      created_at: createdAt,
+      shipping_address: address,
+      subtotal: money(total),
+      shipping_fee: "Miễn phí",
+      total: money(total),
+      website_url: "https://tech-store-rho-vert.vercel.app",
+      customer_phone: phone,
+    };
+
+    // Đơn đã lưu: lỗi gửi Make không làm mất đơn hàng
+    let makeStatus = "failed";
+
+    try {
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-make-apikey": webhookKey,
+        },
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(10000),
+        redirect: "error",
+      });
+
+      if (response.ok) {
+        makeStatus = "accepted";
+      } else {
+        console.error(
+          "Make từ chối thông báo đơn:",
+          order.code,
+          response.status
+        );
+      }
+    } catch {
+      console.error("Chưa xác nhận được Make nhận đơn:", order.code);
+    }
+
+    return NextResponse.json({
+      code: order.code,
+      total,
+      items: lines,
+      make_status: makeStatus,
+    });
+  } catch {
+    console.error("Lỗi ngoài dự kiến khi xử lý đơn hàng");
+    return fail(
+      "Có lỗi xử lý. Vui lòng kiểm tra đơn trong tài khoản trước khi thử lại.",
+      500
+    );
+  }
 }
