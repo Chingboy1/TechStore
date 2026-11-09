@@ -5,9 +5,13 @@ import Footer from "./Footer";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from 'react-hot-toast';
 import { getProducts, getCategories } from "@/lib/products";
-import Script from "next/script"; // Bắt buộc phải import Script của Next.js
+import Script from "next/script"; 
 import "./globals.css";
 
+// SỬ DỤNG ALIAS @/ THAY VÌ ĐƯỜNG DẪN TƯƠNG ĐỐI
+import HellEmbers from "./HellEmbers";
+
+// Khôi phục font mặc định cho toàn trang
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
@@ -27,9 +31,12 @@ export default async function RootLayout({ children }) {
   }));
 
   return (
-    <html lang="vi">
-      <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-[#f5f5f7] dark:bg-[#0a0a0a] text-gray-800 dark:text-gray-100 antialiased transition-colors duration-300`}>
+    <html lang="vi" className="dark">
+      <body className={`${geistSans.variable} ${geistMono.variable} font-sans min-h-screen bg-[#050505] text-gray-100 antialiased overflow-x-hidden`}>
         
+        {/* Hiệu ứng lửa bay */}
+        <HellEmbers />
+
         <CartProvider>
           <Sidebar categories={categories} /> 
           
@@ -37,17 +44,26 @@ export default async function RootLayout({ children }) {
             
             <Header products={searchList} /> 
             
-            <main className="flex-grow">
+            <main className="flex-grow relative z-10">
               {children}
             </main>
             
             <Footer /> 
           </div>
 
-          <Toaster position="bottom-right" />
+          <Toaster 
+            position="bottom-right" 
+            toastOptions={{
+              style: {
+                background: '#111',
+                color: '#fff',
+                border: '1px solid #dc2626',
+              },
+            }}
+          />
         </CartProvider>
 
-        {/* ================= TÍCH HỢP CHATBOT BOTPRESS ================= */}
+        {/* Tích hợp Chatbot Botpress */}
         <Script 
           src="https://cdn.botpress.cloud/webchat/v3.7/inject.js" 
           strategy="afterInteractive" 
@@ -56,7 +72,6 @@ export default async function RootLayout({ children }) {
           src="https://files.bpcontent.cloud/2026/10/22/09/20261022095005-MVU5GTED.js" 
           strategy="afterInteractive" 
         />
-        {/* ============================================================= */}
         
       </body>
     </html>
